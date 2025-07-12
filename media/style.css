@@ -1,0 +1,32 @@
+body {
+  font-family: sans-serif;
+  padding: 1em;
+  color: var(--vscode-foreground);
+  background-color: var(--vscode-editor-background);
+}
+
+ul {
+  list-style: none;
+  padding-left: 1em;
+}
+
+.node:hover {
+  background-color: var(--vscode-list-hoverBackground);
+  cursor: pointer;
+}
+
+.popup {
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  width: 60%;
+  padding: 1em;
+  background: var(--vscode-editorWidget-background);
+  border: 1px solid var(--vscode-editorWidget-border);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+button.copy-btn {
+  float: right;
+}
