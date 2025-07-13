@@ -1,8 +1,9 @@
 # 🔥 JSON Foundry
 
-[![GitHub Repo](https://img.shields.io/badge/GitHub-JsonFoundry-000?logo=github)](https://github.com/KarrthikReddyChinasani/JsonFoundry)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/karthikchinasani.json-foundry?color=blue&label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=karthikchinasani.json-foundry)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/karthikchinasani.json-foundry?label=Installs)](https://marketplace.visualstudio.com/items?itemName=karthikchinasani.json-foundry)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![VS Code Marketplace](https://img.shields.io/badge/Marketplace-Coming%20Soon-blue?logo=visualstudiocode)](https://marketplace.visualstudio.com/)
+[![GitHub](https://img.shields.io/badge/GitHub-KarrthikReddyChinasani%2FJsonFoundry-blue?logo=github)](https://github.com/KarrthikReddyChinasani/JsonFoundry)
 
 
 **Visualize JSON as an interactive mind map + generate fully typed TypeScript interfaces.**  

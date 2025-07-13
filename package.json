@@ -10,8 +10,9 @@
   },
   "homepage": "https://github.com/KarrthikReddyChinasani/JsonFoundry#readme",
   "description": "Visualize JSON structure as HTML and generate TypeScript interfaces in file-like tabs.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "karthikchinasani",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
