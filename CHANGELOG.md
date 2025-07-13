@@ -4,6 +4,13 @@ All notable changes to **JSON Foundry** will be documented here.
 
 ---
 
+## [1.0.2] - 2025-07-13
+
+### 🛠 Fixes & Enhancements
+- 📝 Improved README formatting and Marketplace metadata.
+- 🔧 Cleaned up unused `.vsix` files from root directory post-publish.
+- 💡 Added example JSON and helper tip for using demo data.
+
 ## [1.0.1] - 2025-07-13
 
 ### ✨ Added

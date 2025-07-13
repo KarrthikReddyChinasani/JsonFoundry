@@ -9,6 +9,8 @@
 **Visualize JSON as an interactive mind map + generate fully typed TypeScript interfaces.**  
 Built for developers who work with APIs, data contracts, and schema design.
 
+![JSON Foundry Demo](demo.gif)
+
 ---
 
 ## 📦 Extension Info
