@@ -80,7 +80,7 @@ Coming soon...
 npm install -g @vscode/vsce
 vsce package
 code --install-extension json-foundry-1.0.0.vsix
-
+```
 
 ## 🧱 Project Structure
 
@@ -104,8 +104,9 @@ To develop locally:
 npm install       # Install dependencies
 npm run build     # Compile TypeScript
 code .            # Open VS Code
+```
 
-# Press F5 to launch Extension Development Host
+Press F5 to launch Extension Development Host
 
 
 ---
@@ -114,7 +115,7 @@ code .            # Open VS Code
 
 ```markdown
 ## 📄 License
-
+```
 MIT © Karthik
 
 This extension is free to use and modify. See `LICENSE` for full terms.
