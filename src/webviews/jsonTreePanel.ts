@@ -40,7 +40,6 @@ export class JsonTreePanel {
     if (editor) {
       try {
         const json = JSON.parse(editor.document.getText());
-        // 🔧 FIX: don't wrap in another Root
         treeHtml = this.renderNode("Root", json, "Root");
       } catch (e) {
         treeHtml = `<p style="color:red;">Invalid JSON</p>`;
@@ -82,18 +81,36 @@ export class JsonTreePanel {
   }
 
   private renderNode(label: string, value: any, path: string): string {
-    const valueStr = JSON.stringify(value);
-
-    if (typeof value !== "object" || value === null) {
+    // ✅ Function node
+    if (typeof value === "function") {
+      const funcStr = value.toString();
       return `
-      <div class="node-wrapper">
-        <svg class="connector-svg"></svg>
-        <div class="node-box" data-path="${path}" data-value='${valueStr}'>${label}: ${valueStr}</div>
-      </div>
-    `;
+        <div class="node-wrapper">
+          <svg class="connector-svg"></svg>
+          <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
+        funcStr
+      )}'>
+            ${label}: [Function]
+          </div>
+        </div>
+      `;
     }
 
-    // ✅ Handle array: show parent node, then individual children stacked vertically
+    // ✅ Primitive value
+    if (typeof value !== "object" || value === null) {
+      return `
+        <div class="node-wrapper">
+          <svg class="connector-svg"></svg>
+          <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
+        value
+      )}'>
+            ${label}: ${JSON.stringify(value)}
+          </div>
+        </div>
+      `;
+    }
+
+    // ✅ Array value
     if (Array.isArray(value)) {
       const children = value
         .map((item, index) => {
@@ -103,15 +120,19 @@ export class JsonTreePanel {
         .join("");
 
       return `
-      <div class="node-wrapper">
-        <svg class="connector-svg"></svg>
-        <div class="node-box" data-path="${path}" data-value='${valueStr}'>${label}</div>
-        <div class="children">${children}</div>
-      </div>
-    `;
+        <div class="node-wrapper">
+          <svg class="connector-svg"></svg>
+          <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
+        value
+      )}'>
+            ${label}
+          </div>
+          <div class="children">${children}</div>
+        </div>
+      `;
     }
 
-    // ✅ Normal object handling
+    // ✅ Object value
     const children = Object.entries(value)
       .map(([key, val]) => {
         const childPath = `${path}.${key}`;
@@ -120,11 +141,15 @@ export class JsonTreePanel {
       .join("");
 
     return `
-    <div class="node-wrapper">
-      <svg class="connector-svg"></svg>
-      <div class="node-box" data-path="${path}" data-value='${valueStr}'>${label}</div>
-      <div class="children">${children}</div>
-    </div>
-  `;
+      <div class="node-wrapper">
+        <svg class="connector-svg"></svg>
+        <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
+      value
+    )}'>
+          ${label}
+        </div>
+        <div class="children">${children}</div>
+      </div>
+    `;
   }
 }
