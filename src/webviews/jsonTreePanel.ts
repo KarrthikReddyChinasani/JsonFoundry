@@ -1,4 +1,3 @@
-// ✅ src/webviews/jsonTreePanel.ts
 import * as vscode from "vscode";
 import { getNonce } from "../utils";
 
@@ -41,7 +40,8 @@ export class JsonTreePanel {
     if (editor) {
       try {
         const json = JSON.parse(editor.document.getText());
-        treeHtml = this.renderNode("Root", json, "root");
+        // 🔧 FIX: don't wrap in another Root
+        treeHtml = this.renderNode("Root", json, "Root");
       } catch (e) {
         treeHtml = `<p style="color:red;">Invalid JSON</p>`;
       }
@@ -67,7 +67,12 @@ export class JsonTreePanel {
       <body>
         <div class="tree-wrapper">${treeHtml}</div>
         <div id="popup">
-          <h3><span></span> <button class="copy-btn">Copy Path</button></h3>
+          <h3><span></span>
+            <div>
+              <button class="copy-btn">Copy Path</button>
+              <button class="close-btn">x</button>
+            </div>
+          </h3>
           <pre></pre>
         </div>
         <script nonce="${nonce}" src="${scriptUri}"></script>
@@ -79,15 +84,35 @@ export class JsonTreePanel {
   private renderNode(label: string, value: any, path: string): string {
     const valueStr = JSON.stringify(value);
 
-    if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    if (typeof value !== "object" || value === null) {
       return `
-      <div class="node-wrapper" data-node-path="${path}">
+      <div class="node-wrapper">
+        <svg class="connector-svg"></svg>
         <div class="node-box" data-path="${path}" data-value='${valueStr}'>${label}: ${valueStr}</div>
       </div>
     `;
     }
 
-    const childrenHtml = Object.entries(value)
+    // ✅ Handle array: show parent node, then individual children stacked vertically
+    if (Array.isArray(value)) {
+      const children = value
+        .map((item, index) => {
+          const childPath = `${path}[${index}]`;
+          return this.renderNode(`${label}[${index}]`, item, childPath);
+        })
+        .join("");
+
+      return `
+      <div class="node-wrapper">
+        <svg class="connector-svg"></svg>
+        <div class="node-box" data-path="${path}" data-value='${valueStr}'>${label}</div>
+        <div class="children">${children}</div>
+      </div>
+    `;
+    }
+
+    // ✅ Normal object handling
+    const children = Object.entries(value)
       .map(([key, val]) => {
         const childPath = `${path}.${key}`;
         return this.renderNode(key, val, childPath);
@@ -95,12 +120,10 @@ export class JsonTreePanel {
       .join("");
 
     return `
-    <div class="node-wrapper ${
-      label === "Root" ? "root-wrapper" : ""
-    } data-node-path="${path}">
-      <div class="node-box" data-path="${path}" data-value='${valueStr}'>${label}</div>
-      <div class="children">${childrenHtml}</div>
+    <div class="node-wrapper">
       <svg class="connector-svg"></svg>
+      <div class="node-box" data-path="${path}" data-value='${valueStr}'>${label}</div>
+      <div class="children">${children}</div>
     </div>
   `;
   }
