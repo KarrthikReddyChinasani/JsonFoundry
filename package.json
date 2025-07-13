@@ -1,17 +1,13 @@
 {
-  "name": "jsonfoundry",
+  "name": "json-foundry",
   "displayName": "Json Foundry",
-  "description": "Visualize JSON structure as a tree and generate TypeScript interfaces directly from the file tab.",
+  "description": "Visualize JSON structure as HTML and generate TypeScript interfaces in file-like tabs.",
   "version": "1.0.0",
-  "publisher": "karthik.jsonfoundry",
+  "publisher": "karthik.json-foundry",
   "engines": {
     "vscode": "^1.85.0"
   },
-  "categories": [
-    "Other",
-    "Programming Languages",
-    "Visualization" 
-  ],
+  "categories": ["Other", "Programming Languages"],
   "activationEvents": [
     "onCommand:jsonTools.viewTree",
     "onCommand:jsonTools.viewTS"
@@ -20,7 +16,7 @@
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
     "build": "tsc",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -w"
   },
   "contributes": {
     "commands": [
@@ -33,27 +29,6 @@
         "title": "Generate TypeScript Interface"
       }
     ],
-    "viewsContainers": {
-      "panel": [
-        {
-          "id": "jsonToolsPanel",
-          "title": "JSON Tools",
-          "icon": "media/icon.png"
-        }
-      ]
-    },
-    "views": {
-      "panel": [
-        {
-          "id": "jsonTreeWebview",
-          "name": "JSON Tree View"
-        },
-        {
-          "id": "tsInterfaceWebview",
-          "name": "TS Interface View"
-        }
-      ]
-    },
     "menus": {
       "editor/title": [
         {
@@ -72,6 +47,5 @@
   "devDependencies": {
     "@types/vscode": "^1.85.0",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {}
+  }
 }

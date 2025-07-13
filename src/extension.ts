@@ -1,21 +1,28 @@
-import * as vscode from 'vscode';
-import { JsonTreeWebviewProvider } from './jsonTreeWebview';
-import { TsInterfaceWebviewProvider } from './tsInterfaceWebview';
+import * as vscode from "vscode";
+import { generateInterfaceFromJson } from "./tsGenerator";
+import { JsonTreePanel } from "./webviews/jsonTreePanel";
 
 export function activate(context: vscode.ExtensionContext) {
-  const treeProvider = new JsonTreeWebviewProvider(context.extensionUri);
-  const tsProvider = new TsInterfaceWebviewProvider(context.extensionUri);
-
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider('jsonTreeWebview', treeProvider),
-    vscode.window.registerWebviewViewProvider('tsInterfaceWebview', tsProvider),
-
-    vscode.commands.registerCommand('jsonTools.viewTree', () => {
-      vscode.commands.executeCommand('workbench.view.panel.jsonTreeWebview');
+    vscode.commands.registerCommand("jsonTools.viewTree", () => {
+      JsonTreePanel.render(context.extensionUri);
     }),
 
-    vscode.commands.registerCommand('jsonTools.viewTS', () => {
-      vscode.commands.executeCommand('workbench.view.panel.tsInterfaceWebview');
+    vscode.commands.registerCommand("jsonTools.viewTS", async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) return;
+
+      try {
+        const json = JSON.parse(editor.document.getText());
+        const ts = generateInterfaceFromJson(json, "RootObject");
+        const doc = await vscode.workspace.openTextDocument({
+          language: "typescript",
+          content: ts,
+        });
+        vscode.window.showTextDocument(doc, { preview: false });
+      } catch (e) {
+        vscode.window.showErrorMessage(`Invalid JSON: ${e}`);
+      }
     })
   );
 }

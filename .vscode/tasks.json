@@ -4,7 +4,6 @@
     {
       "label": "npm: build",
       "type": "shell",
-      "script": "build",
       "group": "build",
       "problemMatcher": [],
       "command": "npm run build"
