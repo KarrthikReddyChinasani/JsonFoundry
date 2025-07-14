@@ -6,6 +6,26 @@ document.addEventListener("DOMContentLoaded", () => {
     popup.style.display = "none";
   };
 
+  /**
+   * legend toggle start
+   */
+
+  const toggleBtn = document.querySelector(".legend-toggle");
+  const legendBox = document.querySelector(".type-legend");
+
+  if (!toggleBtn || !legendBox) {
+    console.warn("Legend toggle or box not found");
+    return;
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    legendBox.classList.toggle("hidden");
+  });
+
+  /**
+   * legend toggle stop
+   */
+
   document.querySelectorAll(".node-box").forEach((box) => {
     box.addEventListener("click", () => {
       const path = box.dataset.path;
@@ -90,8 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
           path.setAttribute("class", "connector-path");
           path.setAttribute(
             "d",
-            `M${startX},${startY} C${startX + 40},${startY} ${
-              endX - 40
+            `M${startX},${startY} C${startX + 80},${startY} ${
+              endX - 80
             },${endY} ${endX},${endY}`
           );
           svg.appendChild(path);

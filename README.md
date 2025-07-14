@@ -43,9 +43,6 @@ Built for developers who work with APIs, data contracts, and schema design.
   - 📚 Array  
   - 📄 Primitive
 
-- 🔄 **Expand/Collapse Support**  
-  Each object/array node can be collapsed or expanded with a + / − button
-
 - 🌈 **Modern UI**  
   Curved connectors, hover tooltips, smooth scrollbars, and a popup code viewer
 

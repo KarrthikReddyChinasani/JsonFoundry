@@ -1,5 +1,8 @@
 import * as vscode from "vscode";
 import { getNonce } from "../utils";
+import { getIconEmoji } from "./getIconEmoji";
+import { getType } from "./getType";
+import LEGEND from "./legend";
 
 export class JsonTreePanel {
   public static currentPanel: JsonTreePanel | undefined;
@@ -55,7 +58,8 @@ export class JsonTreePanel {
       vscode.Uri.joinPath(this.extensionUri, "media", "jsonTree.css")
     );
 
-    webview.html = `
+    webview.html =
+      `
       <!DOCTYPE html>
       <html>
       <head>
@@ -63,8 +67,9 @@ export class JsonTreePanel {
         <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
         <link rel="stylesheet" href="${styleUri}" />
       </head>
-      <body>
-        <div class="tree-wrapper">${treeHtml}</div>
+      <body>` +
+      LEGEND +
+      `<div class="tree-wrapper">${treeHtml}</div>
         <div id="popup">
           <h3><span></span>
             <div>
@@ -81,16 +86,19 @@ export class JsonTreePanel {
   }
 
   private renderNode(label: string, value: any, path: string): string {
+    const type = getType(value);
+    const icon = getIconEmoji(type);
     // ✅ Function node
     if (typeof value === "function") {
       const funcStr = value.toString();
       return `
         <div class="node-wrapper">
           <svg class="connector-svg"></svg>
-          <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
-        funcStr
-      )}'>
-            ${label}: [Function]
+          <div class="node-box" data-path="${path}" 
+              data-value='${JSON.stringify(funcStr)}'>
+              <span class="node-icon">${getIconEmoji(
+                "unknown"
+              )}</span>${label}: [Function]
           </div>
         </div>
       `;
@@ -101,10 +109,10 @@ export class JsonTreePanel {
       return `
         <div class="node-wrapper">
           <svg class="connector-svg"></svg>
-          <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
-        value
-      )}'>
-            ${label}: ${JSON.stringify(value)}
+          <div class="node-box" data-path="${path}" 
+          data-value='${JSON.stringify(value)}'>
+             <span class="node-icon">${icon}</span>
+             ${label}: ${JSON.stringify(value)}
           </div>
         </div>
       `;
@@ -122,9 +130,9 @@ export class JsonTreePanel {
       return `
         <div class="node-wrapper">
           <svg class="connector-svg"></svg>
-          <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
-        value
-      )}'>
+          <div class="node-box" data-path="${path}" 
+          data-value='${JSON.stringify(value)}'>
+            <span class="node-icon">📚</span>
             ${label}
           </div>
           <div class="children">${children}</div>
@@ -143,9 +151,9 @@ export class JsonTreePanel {
     return `
       <div class="node-wrapper">
         <svg class="connector-svg"></svg>
-        <div class="node-box" data-path="${path}" data-value='${JSON.stringify(
-      value
-    )}'>
+        <div class="node-box" data-path="${path}" 
+        data-value='${JSON.stringify(value)}'>
+          <span class="node-icon">🗂️</span>
           ${label}
         </div>
         <div class="children">${children}</div>

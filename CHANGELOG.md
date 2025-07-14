@@ -4,6 +4,14 @@ All notable changes to **JSON Foundry** will be documented here.
 
 ---
 
+## [1.0.3] - 2025-07-14
+
+### ✨ Added
+- 🗂️ Emoji-based icons for different JSON types: object, array, string, number, boolean, null.
+- ❓ Floating toggle button with a type legend to help users understand icons.
+
+---
+
 ## [1.0.2] - 2025-07-13
 
 ### 🛠 Fixes & Enhancements
@@ -29,6 +37,3 @@ All notable changes to **JSON Foundry** will be documented here.
 - 🌳 View JSON as a horizontal mind-map-like tree.
 - 🔍 Popup with key/value detail and copyable path.
 - 🧬 Generate full TypeScript interfaces from JSON.
-- 🎨 Node icons for object, array, and primitives.
-- 🔀 Expand/collapse support and color-coded layout.
-- 🌓 Theme toggle: modern color vs neutral.
